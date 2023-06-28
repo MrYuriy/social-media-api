@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+import os
+import uuid
 
 
 class UserManager(BaseUserManager):
@@ -39,3 +42,24 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+    def __str__(self):
+        return self.email
+
+
+def profile_picture(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.title)}-{uuid.uuid4()}{extension}"
+    return os.path.join("uploads/", filename)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=25, unique=True)
+    bio = models.TextField(max_length=200)
+    image = models.ImageField(upload_to=profile_picture, blank=True, null=True, )
+    followers = models.ManyToManyField(User, related_name="followers", blank=True, null=True)
+    following = models.ManyToManyField(User, related_name="following", blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user} profile"

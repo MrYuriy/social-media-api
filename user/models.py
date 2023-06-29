@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 import os
 import uuid
 
+from social_media_api import settings
+
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -54,7 +56,7 @@ def profile_picture(instance, filename):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     username = models.CharField(max_length=25, unique=True)
     bio = models.TextField(max_length=200)
     image = models.ImageField(upload_to=profile_picture, blank=True, null=True, )

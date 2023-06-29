@@ -1,7 +1,5 @@
-from django.conf.urls.static import static
 from rest_framework import routers
 
-from social_media_api import settings
 from django.urls import path, include
 
 from user.views import (

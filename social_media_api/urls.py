@@ -23,5 +23,6 @@ from social_media_api import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/user/", include("user.urls", namespace="user")),
+    path("api/post/", include("post.urls", namespace="post")),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

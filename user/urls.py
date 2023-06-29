@@ -20,8 +20,8 @@ urlpatterns = [
     path("login/", CreateTokenView.as_view(), name="login"),
     path("logout/", LogoutUserView.as_view(), name="logout"),
     path("me/", ManageUserView.as_view(), name="manage"),
-    path("",include(router.urls)),
+    path("", include(router.urls)),
 
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
 app_name = "user"

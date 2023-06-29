@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from user.models import Profile, User
+from user.permissions import IsOwnerOrReadOnly
 from user.serializers import (
     UserSerializer,
     ProfileListSerializer,
@@ -47,6 +48,7 @@ class ProfileViewSet(ModelViewSet):
     queryset = Profile.objects.all()
 
     authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsOwnerOrReadOnly, IsAuthenticated]
 
     def get_queryset(self):
         queryset = self.queryset

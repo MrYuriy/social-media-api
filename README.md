@@ -48,8 +48,8 @@ python manage.py migrate
 
 7. Run server:
 
-In this project sensitive data moved to `.env.sample` file. \
-Please rename it `.env.sample -> .env` before running server.
+Review the list of environment variables present in the .env.sample file.\
+These variables are placeholders for the actual values that need to be set in file .env
 ```shell
 python manage.py runserver
 ```

@@ -13,8 +13,8 @@ from .models import Hashtag, Post
 class HashtagViewSet(ModelViewSet):
     queryset = Hashtag.objects.all()
     serializer_class = HashtagSerializer
-    authentication_classes = TokenAuthentication
-    permission_classes = IsAuthenticated
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsOwnerOrReadOnly, IsAuthenticated]
 
 
 class PostViewSet(ModelViewSet):

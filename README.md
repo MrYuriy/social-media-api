@@ -2,6 +2,58 @@
 ## Description
 RESTful API for a social media platform. The API allow users to create profiles, follow other users, create and retrieve posts, manage comments, and perform basic social media actions.
 
+# Getting Started
+
+To get started with the Social Media API, follow these steps:
+(using PyCharm you can click on the green arrow without copying command)
+
+1. Clone the repository:
+
+    ```shell
+    git clone https://github.com/phaishuk/social-media-api
+    ```
+
+2. Navigate to the project directory (don't forget to check the directory where you clone the project):
+
+    ```shell
+    cd social-media-api
+    ```
+
+3. Create a virtual environment:
+
+    ```shell
+   python -m venv venv
+   ```
+
+4. Activate the virtual environment:
+
+   - For Windows:
+   ```shell
+   env\Scripts\activate
+   ```
+   - For MacOS, Unix, Linux:
+   ```shell
+   source env/bin/activate
+   ```
+
+5. Install the required dependencies:
+```shell
+pip install -r requirements.txt
+```
+
+6. Apply database migrations & and prepared data for testing:
+```shell
+python manage.py migrate
+```
+
+7. Run server:
+
+In this project sensitive data moved to `.env.sample` file. \
+Please rename it `.env.sample -> .env` before running server.
+```shell
+python manage.py runserver
+```
+
 ## Features
 ### User Registration and Authentication:
 Users can register with their email and password to create an account.

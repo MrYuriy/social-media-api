@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -67,6 +68,25 @@ class ProfileViewSet(ModelViewSet):
         if self.action == "retrieve":
             return ProfileDetailSerializer
         return ProfileListSerializer
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "username",
+                type=str,
+                description="Filtering by username (write some symbol that "
+                            "contains in username). ex. ?username=yurii",
+            ),
+            OpenApiParameter(
+                "bio",
+                type=str,
+                description="Filtering by bio (write some symbol that "
+                            "contains in bio). ex. ?bio=bio",
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     @action(detail=True, methods=["post"])
     def follow_switch(self, request, pk=None):

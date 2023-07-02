@@ -1,5 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
@@ -45,3 +46,21 @@ class PostViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "author",
+                type=int,
+                description="Filtering posts by user id ex. ?author=1",
+            ),
+            OpenApiParameter(
+                "hashtag",
+                type=str,
+                description="Filtering by hashtag (write some symbol that "
+                            "contains in username). ex. ?hashtag=po",
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)

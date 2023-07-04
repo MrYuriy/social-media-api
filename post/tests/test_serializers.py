@@ -1,8 +1,13 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
-from rest_framework.exceptions import ValidationError
+from django.test import TestCase
+
 from post.models import Hashtag, Post
-from post.serializers import HashtagSerializer, HashtagsSerializer, PostSerializer, PostDetailSerializer
+from post.serializers import (
+    HashtagSerializer,
+    HashtagsSerializer,
+    PostSerializer,
+    PostDetailSerializer,
+)
 
 
 class HashtagSerializerTest(TestCase):
@@ -38,33 +43,30 @@ class HashtagsSerializerTest(TestCase):
 class PostSerializerTest(TestCase):
     def setUp(self):
         user = get_user_model()
-        self.user = user.objects.create_user(email="testuser@gmail.com", password="testpassword")
+        self.user = user.objects.create_user(
+            email="testuser@gmail.com", password="testpassword"
+        )
 
     def test_valid_data(self):
-        data = {
-            "author": self.user.id,
-            "title": "Test Post",
-            "content": "Test content"
-        }
+        data = {"author": self.user.id, "title": "Test Post", "content": "Test content"}
         serializer = PostSerializer(data=data)
         self.assertTrue(serializer.is_valid())
 
     def test_missing_fields(self):
-        data = {
-            "author": self.user.id,
-            "title": "Test Post"
-        }
+        data = {"author": self.user.id, "title": "Test Post"}
         serializer = PostSerializer(data=data)
         self.assertFalse(serializer.is_valid())
         self.assertIn("content", serializer.errors)
 
     def test_read_only_fields(self):
-        post = Post.objects.create(author=self.user, title="Test Post", content="Test content")
+        post = Post.objects.create(
+            author=self.user, title="Test Post", content="Test content"
+        )
         data = {
             "id": post.id,
             "author": self.user.id,
             "title": "Updated Post",
-            "content": "Updated content"
+            "content": "Updated content",
         }
         serializer = PostSerializer(instance=post, data=data)
         self.assertTrue(serializer.is_valid())
@@ -74,11 +76,15 @@ class PostSerializerTest(TestCase):
 class PostDetailSerializerTest(TestCase):
     def setUp(self):
         User = get_user_model()
-        self.user = User.objects.create_user(email="testuser@gmail.com", password="testpassword")
+        self.user = User.objects.create_user(
+            email="testuser@gmail.com", password="testpassword"
+        )
 
     def test_hashtag_serializer(self):
         hashtag = Hashtag.objects.create(name="test hashtag")
-        post = Post.objects.create(author=self.user, title="Test Post", content="Test content")
+        post = Post.objects.create(
+            author=self.user, title="Test Post", content="Test content"
+        )
         post.hashtag.add(hashtag)
 
         serializer = PostDetailSerializer(instance=post)
@@ -86,12 +92,14 @@ class PostDetailSerializerTest(TestCase):
         self.assertEqual(serializer.data["hashtag"], [hashtag.name])
 
     def test_read_only_fields(self):
-        post = Post.objects.create(author=self.user, title="Test Post", content="Test content")
+        post = Post.objects.create(
+            author=self.user, title="Test Post", content="Test content"
+        )
         data = {
             "id": post.id,
             "author": self.user.id,
             "title": "Updated Post",
-            "content": "Updated content"
+            "content": "Updated content",
         }
         serializer = PostDetailSerializer(instance=post, data=data)
         self.assertTrue(serializer.is_valid())

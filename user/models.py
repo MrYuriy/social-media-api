@@ -1,9 +1,10 @@
+import os
+import uuid
+
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-import os
-import uuid
 
 from social_media_api import settings
 
@@ -59,9 +60,17 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     username = models.CharField(max_length=25, unique=True)
     bio = models.TextField(max_length=200)
-    image = models.ImageField(upload_to=profile_picture, blank=True, null=True, )
-    followers = models.ManyToManyField(User, related_name="followers", blank=True, null=True)
-    following = models.ManyToManyField(User, related_name="following", blank=True, null=True)
+    image = models.ImageField(
+        upload_to=profile_picture,
+        blank=True,
+        null=True,
+    )
+    followers = models.ManyToManyField(
+        User, related_name="followers", blank=True, null=True
+    )
+    following = models.ManyToManyField(
+        User, related_name="following", blank=True, null=True
+    )
 
     def __str__(self):
         return f"{self.user} profile"

@@ -1,13 +1,12 @@
 from django.db.models import Q
-from django.shortcuts import render
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
+from .models import Hashtag, Post
 from .permissions import IsOwnerOrReadOnly
 from .serializers import HashtagSerializer, PostSerializer, PostDetailSerializer
-from .models import Hashtag, Post
 
 
 class HashtagViewSet(ModelViewSet):

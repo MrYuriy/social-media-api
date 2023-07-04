@@ -41,28 +41,34 @@ To get started with the Social Media API, follow these steps:
 pip install -r requirements.txt
 ```
 
-6. Apply database migrations & and prepared data for testing:
-```shell
-python manage.py migrate
-```
+6. Run server:
+   Review the list of environment variables present in the .env.sample file.\
+   These variables are placeholders for the actual values that need to be set in file .env
 
-7. Run server:
-
-Review the list of environment variables present in the .env.sample file.\
-These variables are placeholders for the actual values that need to be set in file .env
 ```shell
 python manage.py runserver
 ```
 
+7. Apply database migrations & and prepared data for testing:
+
+```shell
+python manage.py migrate
+```
+
 ## Features
+
 ### User Registration and Authentication:
+
 Users can register with their email and password to create an account.
 Users can login with their credentials and receive a token for authentication.
 Users can logout and invalidate their token.
+
 ### User Profile:
+
 Users can create and update their profile, including profile picture, bio, and other details.
 Users can retrieve their own profile and view profiles of other users.
 Users can search for users by username or other criteria.
+
 ### Follow/Unfollow:
 Users can follow and unfollow other users.
 Users can view the list of users they are following and the list of users following them.

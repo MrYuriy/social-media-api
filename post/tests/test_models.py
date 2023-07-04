@@ -1,5 +1,6 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+
 from post.models import Hashtag, Post
 
 
@@ -26,8 +27,12 @@ class HashtagModelTest(TestCase):
 class PostModelTest(TestCase):
     def setUp(self):
         user = get_user_model()
-        self.user = user.objects.create_user(email="testuser@mail.com", password="testpassword")
-        self.post = Post.objects.create(author=self.user, title="Test Post", content="Test content")
+        self.user = user.objects.create_user(
+            email="testuser@mail.com", password="testpassword"
+        )
+        self.post = Post.objects.create(
+            author=self.user, title="Test Post", content="Test content"
+        )
 
     def test_author_field(self):
         field_label = self.post._meta.get_field("author").verbose_name

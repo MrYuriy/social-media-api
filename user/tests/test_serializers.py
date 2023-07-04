@@ -2,7 +2,12 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from user.models import Profile
-from user.serializers import UserSerializer, ProfileListSerializer, ProfileDetailSerializer, FollowsSerializer
+from user.serializers import (
+    UserSerializer,
+    ProfileListSerializer,
+    ProfileDetailSerializer,
+    FollowsSerializer,
+)
 
 User = get_user_model()
 
@@ -64,10 +69,7 @@ class FollowsSerializerTest(TestCase):
 
     def test_representation(self):
         serializer = FollowsSerializer(instance=self.followers, many=True)
-        expected_data = [
-            "test@example.com",
-            "another@example.com"
-        ]
+        expected_data = ["test@example.com", "another@example.com"]
         self.assertEqual(serializer.data, expected_data)
 
 

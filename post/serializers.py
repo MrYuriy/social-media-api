@@ -1,11 +1,12 @@
 from rest_framework import serializers
+
 from .models import Hashtag, Post
 
 
 class HashtagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hashtag
-        fields = ("name", )
+        fields = ("name",)
 
 
 class HashtagsSerializer(serializers.ModelSerializer):
@@ -19,7 +20,6 @@ class HashtagsSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Post
         fields = (

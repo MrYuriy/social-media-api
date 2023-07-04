@@ -89,12 +89,16 @@ class ProfileViewSetTest(TestCase):
         self.assertEqual(response.data[0]["user"], "test@example.com")
 
     def test_retrieve_profile(self):
-        response = self.client.get(reverse("user:profile-detail", args=[self.profile.id]))
+        response = self.client.get(
+            reverse("user:profile-detail", args=[self.profile.id])
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["user"], "test@example.com")
 
     def test_filter_profiles_by_username(self):
-        response = self.client.get(reverse("user:profile-list"), {"username": "testuser"})
+        response = self.client.get(
+            reverse("user:profile-list"), {"username": "testuser"}
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["user"], "test@example.com")
@@ -104,4 +108,3 @@ class ProfileViewSetTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["user"], "test@example.com")
-

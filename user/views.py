@@ -57,10 +57,10 @@ class ProfileViewSet(ModelViewSet):
         username = self.request.query_params.get("username")
 
         if email:
-            queryset = queryset.filter(email__icontains=email)
+            queryset = queryset.filter(email__contains=email)
 
         if username:
-            queryset = queryset.filter(username__incontains=username)
+            queryset = queryset.filter(username__contains=username)
 
         return queryset.distinct()
 
@@ -91,11 +91,12 @@ class ProfileViewSet(ModelViewSet):
     @action(detail=True, methods=["post"])
     def follow_switch(self, request, pk=None):
         profile = Profile.objects.get(user=request.user)
+        user = request.user
 
-        if Profile.objects.filter(followers__id=pk).exists():
-            profile.following.remove(User.objects.get(pk=pk))
-            request.user.profile.followers.remove(profile.user)
+        if profile.followers.filter(pk=user.pk).exists():
+            profile.followers.remove(user)
+            user.profile.following.remove(profile.user)
             return Response({"status": "unfollow"})
-        profile.following.add(User.objects.get(pk=pk))
-        request.user.profile.followers.add(profile.user)
+        profile.followers.add(user)
+        user.profile.following.add(profile.user)
         return Response({"status": "follow"})

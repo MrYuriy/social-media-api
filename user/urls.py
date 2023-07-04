@@ -19,7 +19,6 @@ urlpatterns = [
     path("logout/", LogoutUserView.as_view(), name="logout"),
     path("me/", ManageUserView.as_view(), name="manage"),
     path("", include(router.urls)),
-
 ]
 
 app_name = "user"

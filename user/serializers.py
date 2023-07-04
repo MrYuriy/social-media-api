@@ -38,16 +38,26 @@ class FollowsSerializer(serializers.ModelSerializer):
 class ProfileListSerializer(serializers.ModelSerializer):
     followers = FollowsSerializer(read_only=True, many=True)
     following = FollowsSerializer(read_only=True, many=True)
+    user = serializers.CharField(source="user.email")
 
     class Meta:
         model = Profile
-        fields = "__all__"
+        fields = (
+            "id",
+            "user",
+            "username",
+            "bio",
+            "image",
+            "followers",
+            "following",
+        )
 
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source="user.email")
     followers = FollowsSerializer(read_only=True, many=True)
     following = FollowsSerializer(read_only=True, many=True)
+    user = serializers.CharField(source="user.email")
 
     class Meta:
         model = Profile

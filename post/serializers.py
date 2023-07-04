@@ -19,9 +19,16 @@ class HashtagsSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Post
-        fields = "__all__"
+        fields = (
+            "id",
+            "title",
+            "author",
+            "content",
+            "hashtag",
+        )
         read_only_fields = ("user",)
 
 

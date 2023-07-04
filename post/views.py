@@ -14,14 +14,12 @@ class HashtagViewSet(ModelViewSet):
     queryset = Hashtag.objects.all()
     serializer_class = HashtagSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsOwnerOrReadOnly, IsAuthenticated]
 
 
 class PostViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = [IsOwnerOrReadOnly, IsAuthenticated]
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
 
     def get_queryset(self):
         following = self.request.user.profile.following.all()
